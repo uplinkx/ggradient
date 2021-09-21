@@ -52,7 +52,6 @@ void	create_text(t_text *dst, int color, SDL_Rect loc, char *message, double sca
 
 int		clerp(int color1, int color2, int t, int tmax);
 void	ctoRGB(int color, int *r, int *g, int *b);
-void	draw_bar(int *bar_c, int start, int end);
 void	create_gradient(int *dest, int curve_amount, clerps *lerp_info, clerps color_start, clerps color_end);
 
 void	curve_add(t_clerp_m *manager, int *active, int color);

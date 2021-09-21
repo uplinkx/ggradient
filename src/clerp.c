@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 03:20:28 by home              #+#    #+#             */
-/*   Updated: 2021/09/15 22:19:07 by home             ###   ########.fr       */
+/*   Updated: 2021/09/20 22:52:16 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ void	grad_lerp(int *colors, int start, int end, int tmax, int offset)
 	i = 0;
 	while (i < tmax)
 	{
-		// if (i + offset < 0)
-		// 	SDL_Log("Out of bounds %d", i + offset);
-		// else
-			colors[i + offset] = clerp(start, end, i, tmax);
+		colors[i + offset] = clerp(start, end, i, tmax);
 		i++;
 	}
 }
@@ -80,34 +77,26 @@ void	create_gradient(int *dest, int curve_amount, clerps *lerp_info, clerps colo
 	i = 0;
 	offset = 0;
 	bias = 9 / 2.0 * SLIDER_SCALE + 2;
-	start_color = color_start.s_color;
 
+	start_color = color_start.s_color;
 	end_color = lerp_info[0].s_color;
 	distance = (lerp_info[0].slider_b.sprite._dst.x - color_start.slider_b.sprite._dst.x) * 2 + bias + bias + 7;
 	grad_lerp(dest, start_color, end_color, distance, offset);
 
-	start_color = end_color;
 	offset += distance;
 	while (i < curve_amount - 1)
 	{
+		start_color = end_color;
 		end_color = lerp_info[i + 1].s_color;
 		distance = (lerp_info[i + 1].slider_b.sprite._dst.x - lerp_info[i].slider_b.sprite._dst.x) * 2;
 		grad_lerp(dest, start_color, end_color, distance, offset);
 
-		start_color = end_color;
 		offset += distance;
 		i++;
 	}
 
-	int r, g, b;
-
+	start_color = end_color;
 	end_color = color_end.s_color;
-	ctoRGB(end_color, &r, &g, &b);
-	distance = (color_end.slider_b.sprite._dst.x - lerp_info[i].slider_b.sprite._dst.x) * 2;
 	distance = (WIN_WIDTH / 2 - lerp_info[i].slider_b.sprite._dst.x) * 2;
 	grad_lerp(dest, start_color, end_color, distance, offset);
-
-	start_color = end_color;
-	offset += distance;
-	i++;
 }

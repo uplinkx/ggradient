@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 02:31:10 by home              #+#    #+#             */
-/*   Updated: 2021/09/20 08:26:52 by home             ###   ########.fr       */
+/*   Updated: 2021/09/20 22:56:53 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,40 @@ void	context_init(t_context *context)
 	context->font = TTF_OpenFont(ASSETS"chary___.ttf", 150);
 }
 
+void	main_loop(void *context_addr)
+{
+	t_context	*context;
+
+	context = context_addr;
+	if (context->shouldChange == SDL_TRUE)
+	{
+		context->init_fn(context, context->meta);
+		context->shouldChange = SDL_FALSE;
+	}
+
+	context->shouldQuit = SDLX_poll();
+	SDLX_record_input(NULL);
+	SDLX_GameInput_Mouse_Fill(&(g_GameInput), SDL_TRUE);
+
+	context->update_fn(context, context->meta);
+
+	if (context->shouldQuit != SDL_TRUE && SDLX_discrete_frames(NULL) != EXIT_FAILURE)
+	{
+		SDLX_RenderQueue_Flush(NULL, NULL, SDL_TRUE);
+		SDLX_ScreenReset(SDLX_GetDisplay()->renderer, NULL);
+	}
+
+	if (context->shouldChange == SDL_TRUE)
+	{
+		SDLX_CollisionBucket_Flush(NULL);
+		SDLX_RenderQueue_Flush(NULL, SDLX_GetDisplay()->renderer, SDL_FALSE);
+
+		context->close_fn(context, context->meta);
+	}
+}
+
 int	main(void)
 {
-	// int			ticks;
 	t_context	context;
 
 	SDLX_GetDisplay();

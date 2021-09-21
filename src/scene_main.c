@@ -102,7 +102,7 @@ void	*main_scene_init(t_context *context, SDL_UNUSED void *level)
 	SDLX_Button_Init(&(scene->paste), fetch_button_sprite, 0, (SDL_Rect){WIN_WIDTH / 4 - 24, 200, 48, 48}, NULL);
 	scene->paste.trigger_fn = button_paste;
 	scene->paste.meta = &(scene->curves);
-	scene->paste.meta1 = &(scene->active_id);
+	scene->paste.meta = &(scene->active);
 
 	SDLX_Button_Init(&(scene->save_file), fetch_save_sprite, 0, (SDL_Rect){150, 100, 32, 32}, NULL);
 	scene->save_file.trigger_fn = button_generate;

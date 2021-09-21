@@ -17,16 +17,15 @@
 
 void	curves_init(t_clerp_m *manager)
 {
-	manager->capacity = DEFAULT_CAP;
 	manager->curve_count = 0;
-
+	manager->capacity = DEFAULT_CAP;
 	manager->curves = SDL_calloc(manager->capacity, sizeof(*(manager->curves)));
 }
 
 void	curve_add(t_clerp_m *manager, int *active_id, int color)
 {
 	clerps	*elem;
-	double scale = SLIDER_SCALE;
+	double	scale = SLIDER_SCALE;
 
 	SDL_assert(manager->curve_count < manager->capacity);
 
