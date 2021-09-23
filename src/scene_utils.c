@@ -1,6 +1,6 @@
 /***************************************************************************
  * FILENAME:    scene_utils.c
- * DESCRIPTION: Utility functions for scenes.
+ * DESCRIPTION: Utility functions to have a clean main loop.
  *
  * ENVIRONMENT:
  *     macOS Catalina 10.15.7
@@ -8,32 +8,36 @@
  * AUTHORS:
  *     Kevin Colour
  * DATES:
- *     Created: 13Sep2021
+ *     Created: 21Sep2021
 ***************************************************************************/
 
 #include "main.h"
+#include "main_scene.h"
 
-void	*new_scene(size_t size, t_context *context, char *background_path, void *(close)(t_context *, void *), void *(update)(t_context *, void *))
+void	update_buttons(t_main_scene *scene)
 {
-	void *result;
+	SDLX_Button_Update(&(scene->popup));
 
-	result = SDL_calloc(1, size);
+	SDLX_Button_Update(&(scene->increment));
+	SDLX_Button_Update(&(scene->decrement));
+	SDLX_Button_Update(&(scene->slider_inc));
+	SDLX_Button_Update(&(scene->slider_dec));
+	SDLX_Button_Update(&(scene->sliders_start));
+	SDLX_Button_Update(&(scene->sliders_end));
+	SDLX_Button_Update(&(scene->paste));
+	SDLX_Button_Update(&(scene->save_file));
+	SDLX_Button_Update(&(scene->view_file));
 
-	SDL_assert(close != NULL);
-	SDL_assert(update != NULL);
+	SDLX_Button_Update(&(scene->add));
 
-	context->close_fn = close;
-	context->update_fn = update;
-	context->meta = result;
-	context->shouldChange = SDL_FALSE;
+}
 
-	if (background_path != NULL)
-	{
-		context->background = SDLX_Sprite_Static(background_path);
-		SDLX_SetBackground(&(context->background));
-	}
-	else
-		SDLX_SetBackground(NULL);
+void	draw_slider_color(int color, SDL_Rect *color_rect, int x, SDL_Renderer *renderer)
+{
+	int	r, g, b;
 
-	return (result);
+	color_rect->x = x * 2 + 2;
+	ctoRGB(color, &r, &g, &b);
+	SDL_SetRenderDrawColor(renderer, r, g, b, 0);
+	SDL_RenderFillRect(renderer, color_rect);
 }

@@ -126,3 +126,20 @@ void	*button_generate(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED siz
 
 	return (NULL);
 }
+
+void	*button_view_output(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
+{
+	char	**string_ptr;
+	SDL_bool	*popup_isDisabled;
+
+	string_ptr = button->meta;
+	popup_isDisabled = button->meta1;
+	if (SDLX_GAME_PRESS(g_GameInput, g_GameInput_prev, primleft))
+	{
+		*popup_isDisabled = SDL_FALSE;
+		button->isTriggered = SDL_TRUE;
+		SDL_Log("[Saved]: %s", *string_ptr);
+	}
+
+	return (NULL);
+}

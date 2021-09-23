@@ -21,7 +21,7 @@
 
 		<style>
 			body { background-color: #484848; }
-			.emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; border-radius: 5px; z-index: 1000;}
+			.emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; border-radius: 5px;}
 			textarea.emscripten { padding-left:8px; font-family: monospace; width: 80%; background-color: black; color:#fff;}
 			/* the canvas *must not* have any border or padding, or mouse coords will be wrong */
 			/* canvas.emscripten { border: 0px none; background-color: black; height: 80vh;} */
@@ -32,7 +32,6 @@
 	</head>
 
 	<body>
-		<textarea id="clipping" style="width:0;height:0;border:0"  aria-hidden="true"></textarea>
 
 		<div class="fluid-container site" id="site">
 		<img src="../resources/sign.webp" class="img-fluid" style="width: 10vw; text-align: center; margin-left: 45%">
@@ -48,6 +47,9 @@
 			<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
 		</div>
 
+		<br>
+		<textarea class="emscripten" id="output" rows="12"></textarea>
+
 		<img src="../resources/sign.webp" class="img-fluid" style="width: 10vw; text-align: center; margin-left:45%; transform: scaleY(-1);">
 
 		<br>
@@ -56,11 +58,11 @@
 		<h1>More by Me.</h1>
 		<hr>
 		<ul id="hlist">
-			<li><a href="../2048"		style="text-decoration:none;"><img class="cicon" src="../resources/2048_icon.png"></a></li>
-			<li><a href="../pacman"	style="text-decoration:none;"><img class="cicon" src="../resources/pac_icon.png"></a></li>
-			<li><a href="../tictac"	style="text-decoration:none;"><img class="cicon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tic_tac_toe.svg/1200px-Tic_tac_toe.svg.png"></a></li>
-			<li><a href="../flappybird"style="text-decoration:none;"><img class="cicon" src="../resources/flappy_icon.png"></a></li>
-			<li><a href="../chess"		style="text-decoration:none;"><img class="cicon" src="../resources/chess_icon.png"></a></li>
+			<li><a href="../2048"		style="text-decoration:none;"><img class="cicon" src="../resources/icon_2048.png"></a></li>
+			<li><a href="../pacman"	style="text-decoration:none;"><img class="cicon" src="../resources/icon_pac.png"></a></li>
+			<li><a href="../tictac"	style="text-decoration:none;"><img class="cicon" src="../resources/icon_tictac.png"></a></li>
+			<li><a href="../flappybird"style="text-decoration:none;"><img class="cicon" src="../resources/icon_flappy.png"></a></li>
+			<li><a href="../chess"		style="text-decoration:none;"><img class="cicon" src="../resources/icon_chess.png"></a></li>
 		</ul>
 
 		<script type='text/javascript'>
@@ -134,19 +136,7 @@
 					if (text) Module.printErr('[post-exception status] ' + text);
 				};
 			};
-
 		</script>
-
-		<script>
-			async function paste() {
-				document.getElementById("clipping").focus();
-				const rtn = await navigator.clipboard.readText();
-				document.getElementById("canvas").focus();
-				return rtn;
-			}
-
-		</script>
-
 		{{{ SCRIPT }}}
 	</body>
 </html>
