@@ -44,6 +44,7 @@ void	*button_domain_change(SDLX_button *self, void *meta, SDL_UNUSED size_t leng
 void	*button_slider_change(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_paste(SDL_UNUSED SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_add_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
+void	*button_remove_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_generate(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_view_output(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
@@ -57,6 +58,7 @@ void	ctoRGB(int color, int *r, int *g, int *b);
 void	create_gradient(int *dest, int curve_amount, clerps *lerp_info, clerps color_start, clerps color_end);
 
 void	curve_add(t_clerp_m *manager, int *active, int color);
+void	curve_remove(t_clerp_m *manager, int *active_id);
 int		clerp_sort(const void *ptr1, const void *ptr2);
 void	curves_init(t_clerp_m *manager);
 

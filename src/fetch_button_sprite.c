@@ -59,7 +59,7 @@ SDLX_Sprite_Data *carve_add_sprite(void)
 	SDL_Texture			*texture;
 	SDLX_Sprite_Data	*result;
 
-	result = SDL_calloc(1, sizeof(*result));
+	result = SDL_calloc(3, sizeof(*result));
 	texture = SDLX_LoadTexture(ASSETS"add.png");
 
 	i = 0;
@@ -67,6 +67,19 @@ SDLX_Sprite_Data *carve_add_sprite(void)
 	/* The Button */
 	result[i].texture = texture;
 	result[i]._src = (SDL_Rect){0, 0, 16, 16};
+	result[i].src = &(result[i]._src);
+	result[i].cycle = 1;
+	i++;
+
+	/* Remove */
+	result[i].texture = texture;
+	result[i]._src = (SDL_Rect){0, 16, 16, 16};
+	result[i].src = &(result[i]._src);
+	result[i].cycle = 1;
+	i++;
+	/* Remove Hover */
+	result[i].texture = texture;
+	result[i]._src = (SDL_Rect){16, 16, 16, 16};
 	result[i].src = &(result[i]._src);
 	result[i].cycle = 1;
 	i++;
@@ -82,6 +95,8 @@ int		fetch_add_sprite(SDLX_Sprite_Data **dst, int no)
 		sprite_arr = carve_add_sprite();
 
 	if (no == 0) { *dst = &(sprite_arr[0]); }
+	if (no == 1) { *dst = &(sprite_arr[1]); }
+	if (no == 2) { *dst = &(sprite_arr[2]); }
 
 	return (EXIT_SUCCESS);
 }

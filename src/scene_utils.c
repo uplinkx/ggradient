@@ -26,6 +26,7 @@ void	update_buttons(t_main_scene *scene)
 	SDLX_Button_Update(&(scene->save_file));
 
 	SDLX_Button_Update(&(scene->add));
+	SDLX_Button_Update(&(scene->del));
 
 }
 

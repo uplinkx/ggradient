@@ -43,3 +43,30 @@ void	curve_add(t_clerp_m *manager, int *active_id, int color)
 	manager->curve_count++;
 	manager->id_at++;
 }
+
+void	curve_remove(t_clerp_m *manager, int *active_id)
+{
+	int	ix;
+
+	if (manager->curve_count <= 0)
+	{
+		*active_id = -1;
+		return ;
+	}
+
+	ix = 0;
+	while (ix < manager->capacity)
+	{
+		if (manager->curves[ix].x == *active_id)
+			break ;
+		ix++;
+	}
+
+	SDL_memmove(&(manager->curves[ix]), &(manager->curves[manager->curve_count - 1]), sizeof(*(manager->curves)));
+	*active_id = manager->curves[0].x;
+
+	if (manager->curve_count <= 1)
+		*active_id = -1;
+	manager->curve_count--;
+
+}

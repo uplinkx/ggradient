@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 03:20:28 by home              #+#    #+#             */
-/*   Updated: 2021/09/20 22:52:16 by home             ###   ########.fr       */
+/*   Updated: 2021/09/22 20:04:12 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,16 @@ void	grad_lerp(int *colors, int start, int end, int tmax, int offset)
 	}
 }
 
+void	create_gradient_ends(int *dest, clerps color_start, clerps color_end)
+{
+	int	start_color;
+	int	end_color;
+
+	start_color = color_start.s_color;
+	end_color = color_end.s_color;
+	grad_lerp(dest, start_color, end_color, WIN_WIDTH, 0);
+}
+
 void	create_gradient(int *dest, int curve_amount, clerps *lerp_info, clerps color_start, clerps color_end)
 {
 	int	i;
@@ -73,6 +83,12 @@ void	create_gradient(int *dest, int curve_amount, clerps *lerp_info, clerps colo
 	int	offset;
 	int	distance;
 	int	bias;
+
+	if (curve_amount <= 0)
+	{
+		create_gradient_ends(dest, color_start, color_end);
+		return ;
+	}
 
 	i = 0;
 	offset = 0;

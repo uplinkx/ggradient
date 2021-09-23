@@ -41,12 +41,23 @@ void	*main_scene_init(t_context *context, SDL_UNUSED void *level)
 	scene->add.meta1 = &(scene->active_id);
 	scene->add.trigger_fn = button_add_slider;
 
+	SDLX_Button_Init(&(scene->del), fetch_add_sprite, 1, (SDL_Rect){WIN_WIDTH / 4 - 8, 100 + y_offset, 16, 16}, NULL);
+	SDLX_Style_Button(&(scene->del), 1, 2);
+	scene->del.meta = &(scene->curves);
+	scene->del.meta1 = &(scene->active_id);
+	scene->del.trigger_fn = button_remove_slider;
+
 	create_text(&(scene->lower_bound),  0xFFFFFF00, (SDL_Rect){-50,  175 + 30 + y_offset, 0, 0}, "$$$$$$$$$$-1235789012345678901234567890", .15, context->font);
 	create_text(&(scene->upper_bound),  0xFFFFFF00, (SDL_Rect){WIN_WIDTH / 2 - 120,  175 + 30 + y_offset, 0, 0}, "$$$$$$$$$$-1235789012345678901234567890", .15, context->font);
 
 	scene->active = NULL;
 	curves_init(&(scene->curves));
 	curve_add(&(scene->curves), &(scene->active_id), 0xFFFFFF);
+	curve_add(&(scene->curves), &(scene->active_id), 0xFF00FF);
+	curve_add(&(scene->curves), &(scene->active_id), 0x00FFFF);
+	scene->curves.curves[0].slider_b.sprite._dst.x = 70;
+	scene->curves.curves[1].slider_b.sprite._dst.x = 120;
+	scene->curves.curves[2].slider_b.sprite._dst.x = 150;
 
 	SDLX_Button_Init(&(scene->sliders_start), fetch_slider_sprite, 0, (SDL_Rect){WIN_HEIGHT / 2 - 16, 30, 18 * SLIDER_SCALE, 37 * SLIDER_SCALE}, NULL);
 	SDLX_Button_Init(&(scene->sliders_end),   fetch_slider_sprite, 0, (SDL_Rect){WIN_HEIGHT / 2 - 16, 30, 18 * SLIDER_SCALE, 37 * SLIDER_SCALE}, NULL);
@@ -118,6 +129,8 @@ void	*main_scene_update(SDL_UNUSED t_context *context, void *vp_scene)
 		}
 		i++;
 	}
+	if (scene->active_id == -1)
+		scene->active = NULL;
 	create_gradient(scene->bar_c, scene->curves.curve_count, scene->curves.curves, scene->color_start, scene->color_end);
 
 	int	ra[WIN_WIDTH];

@@ -29,6 +29,7 @@ typedef struct	s_main_scene
 	SDLX_button	sliders_start;
 	SDLX_button	sliders_end;
 	SDLX_button	add;
+	SDLX_button	del;
 
 	integer		min;
 	integer		max;

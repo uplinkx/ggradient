@@ -106,6 +106,19 @@ void	*button_add_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED s
 	return (NULL);
 }
 
+void	*button_remove_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
+{
+	t_clerp_m	*manager;
+	int			*id;
+
+	id = button->meta1;
+	manager = button->meta;
+	if (SDLX_GAME_PRESS(g_GameInput, g_GameInput_prev, primleft))
+		curve_remove(manager, id);
+
+	return (NULL);
+}
+
 void	*button_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
 {
 	int		*active_id;
