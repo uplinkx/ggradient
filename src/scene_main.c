@@ -81,19 +81,6 @@ void	*main_scene_init(t_context *context, SDL_UNUSED void *level)
 	scene->save_file.meta = &(scene->curves);
 	scene->save_file.meta1 = &(scene->active_id);
 
-	SDLX_Button_Init(&(scene->view_file), fetch_save_sprite, 2, (SDL_Rect){150, 130, 32, 32}, NULL);
-	scene->view_file.trigger_fn = button_view_output;
-	SDLX_Style_Button(&(scene->view_file), 2, 3);
-	scene->view_file.meta = &(scene->save_string);
-	scene->view_file.meta1 = &(scene->popup.isDisabled);
-
-	SDLX_Button_Init(&(scene->popup), fetch_button_sprite, 0, (SDL_Rect){(WIN_WIDTH / 2 - 175) / 2, 10, 175, 280}, NULL);
-	scene->popup.isDisabled = SDL_TRUE;
-
-	create_text(&(scene->auto_str), 0xBBBBBB00, (SDL_Rect){(WIN_WIDTH / 2 - 175) / 2 + 25, 10 + 40, 0, 0}, "one", .1, context->font);
-
-	scene->save_string = SDL_calloc(5, sizeof(char));
-
 	return (NULL);
 }
 
@@ -116,13 +103,6 @@ void	*main_scene_update(SDL_UNUSED t_context *context, void *vp_scene)
 	char		buff[30];
 
 	scene = vp_scene;
-
-	if (scene->popup.isDisabled == SDL_FALSE)
-	{
-		scene->auto_str.set = scene->save_string;
-		update_text_wrapped(&(scene->auto_str), 0, 10000);
-		SDLX_RenderQueue_Add(NULL, &(scene->auto_str.sprite));
-	}
 	update_buttons(scene);
 
 	int i = 0;
@@ -152,25 +132,25 @@ void	*main_scene_update(SDL_UNUSED t_context *context, void *vp_scene)
 	}
 
 	i = 0;
+	int	temp;
+	int	scale = 8;
+	SDL_Renderer	*renderer = SDLX_GetDisplay()->renderer;
+	SDL_RenderSetScale(renderer, scale, 1);
+
 	while (i < WIN_WIDTH)
 	{
-		SDL_SetRenderDrawColor(SDLX_GetDisplay()->renderer, ra[i], ga[i], ba[i], 0);
-		SDL_RenderDrawLine(SDLX_GetDisplay()->renderer, i + 0, 110, i + 0, 110 + 30);
-		SDL_SetRenderDrawColor(SDLX_GetDisplay()->renderer, ra[i], ga[i], ba[i], 0);
-		SDL_RenderDrawLine(SDLX_GetDisplay()->renderer, i + 1, 110, i + 1, 110 + 30);
-		SDL_SetRenderDrawColor(SDLX_GetDisplay()->renderer, ra[i], ga[i], ba[i], 0);
-		SDL_RenderDrawLine(SDLX_GetDisplay()->renderer, i + 2, 110, i + 2, 110 + 30);
-		SDL_SetRenderDrawColor(SDLX_GetDisplay()->renderer, ra[i], ga[i], ba[i], 0);
-		SDL_RenderDrawLine(SDLX_GetDisplay()->renderer, i + 3, 110, i + 3, 110 + 30);
-		SDL_SetRenderDrawColor(SDLX_GetDisplay()->renderer, ra[i], ga[i], ba[i], 0);
-		SDL_RenderDrawLine(SDLX_GetDisplay()->renderer, i + 4, 110, i + 4, 110 + 30);
-		i += 5;
-	}
+		temp = i / scale;
+		SDL_SetRenderDrawColor(renderer, ra[i], ga[i], ba[i], 0);
+		SDL_RenderDrawLine(renderer, temp + 0, 110, temp + 0, 110 + 30);
 
-	SDL_Renderer *renderer;
+		SDL_SetRenderDrawColor(renderer, ra[i], ga[i], ba[i], 0);
+		SDL_RenderDrawLine(renderer, temp + 0, 110 + 40, temp + 0, 110 + 40 + 30);
+		i += scale;
+	}
+	SDL_RenderSetScale(renderer, 1, 1);
+
 	SDL_Rect	color_box;
 
-	renderer = SDLX_GetDisplay()->renderer;
 	color_box.h = 17 * 2;
 	color_box.w = 17 * 2;
 	color_box.y = 60 + 2;
@@ -200,7 +180,7 @@ void	*main_scene_update(SDL_UNUSED t_context *context, void *vp_scene)
 
 	if (scene->save_file.isTriggered == SDL_TRUE)
 	{
-		generate_c_file(scene->curves.curves, scene->curves.curve_count, &(scene->color_start), &(scene->color_end), scene->min, scene->max, &(scene->save_string));
+		generate_c_file(scene->curves.curves, scene->curves.curve_count, &(scene->color_start), &(scene->color_end), scene->min, scene->max);
 		scene->save_file.isTriggered = SDL_FALSE;
 	}
 

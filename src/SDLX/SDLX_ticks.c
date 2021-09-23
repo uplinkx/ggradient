@@ -14,7 +14,7 @@
 #include "SDLX_ticks.h"
 #include "SDLX.h"
 
-#define RENDER_TIME (2)
+#define RENDER_TIME (10)
 
 int		 SDLX_discrete_frames(int *ticks)
 {

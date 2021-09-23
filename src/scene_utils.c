@@ -16,8 +16,6 @@
 
 void	update_buttons(t_main_scene *scene)
 {
-	SDLX_Button_Update(&(scene->popup));
-
 	SDLX_Button_Update(&(scene->increment));
 	SDLX_Button_Update(&(scene->decrement));
 	SDLX_Button_Update(&(scene->slider_inc));
@@ -26,7 +24,6 @@ void	update_buttons(t_main_scene *scene)
 	SDLX_Button_Update(&(scene->sliders_end));
 	SDLX_Button_Update(&(scene->paste));
 	SDLX_Button_Update(&(scene->save_file));
-	SDLX_Button_Update(&(scene->view_file));
 
 	SDLX_Button_Update(&(scene->add));
 

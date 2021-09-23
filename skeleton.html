@@ -21,7 +21,7 @@
 
 		<style>
 			body { background-color: #484848; }
-			.emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; border-radius: 5px;}
+			.emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; border-radius: 5px; z-index: 1000;}
 			textarea.emscripten { padding-left:8px; font-family: monospace; width: 80%; background-color: black; color:#fff;}
 			/* the canvas *must not* have any border or padding, or mouse coords will be wrong */
 			/* canvas.emscripten { border: 0px none; background-color: black; height: 80vh;} */
@@ -32,6 +32,7 @@
 	</head>
 
 	<body>
+		<textarea id="clipping" style="width:0;height:0;border:0"  aria-hidden="true"></textarea>
 
 		<div class="fluid-container site" id="site">
 		<img src="../resources/sign.webp" class="img-fluid" style="width: 10vw; text-align: center; margin-left: 45%">
@@ -136,7 +137,19 @@
 					if (text) Module.printErr('[post-exception status] ' + text);
 				};
 			};
+
 		</script>
+
+		<script>
+			async function paste() {
+				document.getElementById("clipping").focus();
+				const rtn = await navigator.clipboard.readText();
+				document.getElementById("canvas").focus();
+				return rtn;
+			}
+
+		</script>
+
 		{{{ SCRIPT }}}
 	</body>
 </html>

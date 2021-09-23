@@ -32,16 +32,18 @@
 # define GRAD_STRING_ROUTINE (1)
 #endif
 
-void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end, int min, int max, char **s)
+#include <stdio.h>
+
+void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end, int min, int max)
 {
 	int			i;
 	int			curr;
 	char		buffer[10000];
 	int			offset;
 
-#ifdef GRAD_STRING_ROUTINE
-	SDL_free(*s);
-#endif
+// #ifdef GRAD_STRING_ROUTINE
+// 	SDL_free(*s);
+// #endif
 
 #ifdef GRAD_FILE_ROUTINE
 	const char	*file_name;
@@ -75,10 +77,11 @@ void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"	else if (val < %d)\n", WIN_WIDTH / DISPLAY_SCALE);
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"		result = clerp(0x%.6X, 0x%.6X, val - %d, %d);\n", curves[i].s_color, end->s_color, curves[i].slider_b.sprite._dst.x, max / DISPLAY_SCALE - curves[i].slider_b.sprite._dst.x);
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"	ctoRGB(result, r, g, b);\n");
-	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"}\n");
+	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"}\n\n\n");
 
 #ifdef GRAD_STRING_ROUTINE
-	*s = SDL_strdup(buffer);
+	// *s = SDL_strdup(buffer);
+	printf("=================[GENERATED FILE]=================\n\n%s", buffer);
 #endif
 
 #ifdef GRAD_FILE_ROUTINE

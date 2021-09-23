@@ -60,6 +60,6 @@ void	curve_add(t_clerp_m *manager, int *active, int color);
 int		clerp_sort(const void *ptr1, const void *ptr2);
 void	curves_init(t_clerp_m *manager);
 
-void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end, int min, int max, char **s);
+void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end, int min, int max);
 
 #endif

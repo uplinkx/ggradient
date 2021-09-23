@@ -44,13 +44,6 @@ typedef struct	s_main_scene
 
 	SDLX_button	paste;
 	SDLX_button	save_file;
-	SDLX_button	view_file;
-	char		*save_string;
-	t_text		auto_str;
-
-	SDLX_button	popup;
-	SDLX_button	close_popup;
-
 }				t_main_scene;
 
 void	update_buttons(t_main_scene *scene);
