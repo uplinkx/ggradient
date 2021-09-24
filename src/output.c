@@ -121,6 +121,7 @@ void	print_help(void)
 	"The magnifying glass increase the gradient resolution to make it more fine,\n"
 	"right clicking decreases the resolution of the gradient. If it is slow for you this might help.\n"
 	"\n"
+	"More info at https://github.com/uplinkx/gradient\n"
 	"Thank you, please play around with it!\n"
 	);
 }
