@@ -34,7 +34,7 @@
 
 #include <stdio.h>
 
-void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end, int min, int max)
+void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end)
 {
 	int			i;
 	int			curr;
@@ -64,7 +64,7 @@ void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"	result = 0;\n");
 
 	i = 0;
-	offset = min;
+	offset = 0;
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr, "	if (val < %d)\n", curves[0].slider_b.sprite._dst.x);
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr, "		result = clerp(0x%.6X, 0x%.6X, val - %d, %d);\n", start->s_color, curves[0].s_color, start->slider_b.sprite._dst.x, curves[0].slider_b.sprite._dst.x);
 	while (i < curve_count - 1)
@@ -75,7 +75,7 @@ void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end
 		i++;
 	}
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"	else if (val < %d)\n", WIN_WIDTH / DISPLAY_SCALE);
-	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"		result = clerp(0x%.6X, 0x%.6X, val - %d, %d);\n", curves[i].s_color, end->s_color, curves[i].slider_b.sprite._dst.x, max / DISPLAY_SCALE - curves[i].slider_b.sprite._dst.x);
+	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"		result = clerp(0x%.6X, 0x%.6X, val - %d, %d);\n", curves[i].s_color, end->s_color, curves[i].slider_b.sprite._dst.x, WIN_WIDTH / DISPLAY_SCALE - curves[i].slider_b.sprite._dst.x);
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"	ctoRGB(result, r, g, b);\n");
 	curr += SDL_snprintf(buffer + curr, sizeof(buffer) - curr,		"}\n\n\n");
 

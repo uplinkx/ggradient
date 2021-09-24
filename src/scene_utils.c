@@ -16,8 +16,6 @@
 
 void	update_buttons(t_main_scene *scene)
 {
-	SDLX_Button_Update(&(scene->increment));
-	SDLX_Button_Update(&(scene->decrement));
 	SDLX_Button_Update(&(scene->slider_inc));
 	SDLX_Button_Update(&(scene->slider_dec));
 	SDLX_Button_Update(&(scene->sliders_start));

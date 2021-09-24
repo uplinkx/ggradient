@@ -18,9 +18,6 @@
 
 typedef struct	s_main_scene
 {
-	SDLX_button	increment;
-	SDLX_button	decrement;
-
 	SDLX_button	slider_inc;
 	SDLX_button	slider_dec;
 
@@ -31,15 +28,9 @@ typedef struct	s_main_scene
 	SDLX_button	add;
 	SDLX_button	del;
 
-	integer		min;
-	integer		max;
-
 	t_clerp_m	curves;
 	int			active_id;
 	clerps		*active;
-
-	t_text		lower_bound;
-	t_text		upper_bound;
 
 	int			bar_c[WIN_WIDTH * 3];
 
