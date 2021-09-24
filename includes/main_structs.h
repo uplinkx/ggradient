@@ -28,6 +28,13 @@ typedef struct	s_switcher
 	int		*ptr2;
 }				t_switcher;
 
+typedef struct	s_color_sel
+{
+	SDLX_Sprite	r;
+	SDLX_Sprite	g;
+	SDLX_Sprite	b;
+}				t_color_sel;
+
 typedef struct	clerps
 {
 	int			s_color;

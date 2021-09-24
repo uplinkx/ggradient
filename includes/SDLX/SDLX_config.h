@@ -4,8 +4,8 @@
 # define DISPLAY_SCALE (2)
 
 # define WIN_TITLE	"Gradient"
-# define WIN_WIDTH	(200 * DISPLAY_SCALE)
-# define WIN_HEIGHT	(350 * DISPLAY_SCALE)
+# define WIN_WIDTH	(256 * DISPLAY_SCALE)
+# define WIN_HEIGHT	(205 * DISPLAY_SCALE)
 # define WIN_POS_X	(4200)
 # define WIN_POS_Y	(100)
 

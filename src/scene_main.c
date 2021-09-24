@@ -21,30 +21,31 @@ void	*main_scene_init(t_context *context, SDL_UNUSED void *level)
 
 	scene = new_scene(sizeof(*scene), context, NULL, main_scene_close, main_scene_update);
 
-	y_offset = 80;
+	y_offset = -14;
 
-	SDLX_Button_Init(&(scene->add), fetch_add_sprite, 0, (SDL_Rect){WIN_WIDTH / 4 - 16, 150 + y_offset, 32, 32}, NULL);
-	scene->add.sprite.angle = 45;
+	SDLX_Button_Init(&(scene->add), fetch_add_sprite, 0, (SDL_Rect){WIN_WIDTH / 4 - 8 - 12, 192 + y_offset, 16, 16}, NULL);
+	SDLX_Style_Button(&(scene->add), 0, 1);
 	scene->add.meta = &(scene->curves);
 	scene->add.meta1 = &(scene->active_id);
 	scene->add.trigger_fn = button_add_slider;
 
-	SDLX_Button_Init(&(scene->del), fetch_add_sprite, 1, (SDL_Rect){WIN_WIDTH / 4 - 8, 100 + y_offset, 16, 16}, NULL);
-	SDLX_Style_Button(&(scene->del), 1, 2);
+	SDLX_Button_Init(&(scene->del), fetch_add_sprite, 2, (SDL_Rect){WIN_WIDTH / 4 - 8 + 12, 192 + y_offset, 16, 16}, NULL);
+	SDLX_Style_Button(&(scene->del), 2, 3);
 	scene->del.meta = &(scene->curves);
 	scene->del.meta1 = &(scene->active_id);
 	scene->del.trigger_fn = button_remove_slider;
 
 	scene->active = NULL;
 	curves_init(&(scene->curves));
-	curve_add(&(scene->curves), &(scene->active_id), 0xFFFFFF);
+	// curve_add(&(scene->curves), &(scene->active_id), 0xff3083);
+	curve_add(&(scene->curves), &(scene->active_id), 0x000000);
 
 	SDLX_Button_Init(&(scene->sliders_start), fetch_slider_sprite, 0, (SDL_Rect){WIN_HEIGHT / 2 - 16, 30, 18 * SLIDER_SCALE, 37 * SLIDER_SCALE}, NULL);
 	SDLX_Button_Init(&(scene->sliders_end),   fetch_slider_sprite, 0, (SDL_Rect){WIN_HEIGHT / 2 - 16, 30, 18 * SLIDER_SCALE, 37 * SLIDER_SCALE}, NULL);
 	scene->sliders_start.sprite._dst.x = -9 * SLIDER_SCALE;
 	scene->sliders_end.sprite._dst.x = WIN_WIDTH / 2 - 9 * SLIDER_SCALE;
-	scene->color_start.s_color = 0xFF00FF;
-	scene->color_end.s_color = 0x0000FF;
+	scene->color_start.s_color = 0x3b3638;
+	scene->color_end.s_color = 0xFFFFFF;
 
 	scene->sliders_start.meta = &(scene->paste_meta.which);
 	scene->sliders_start.meta1 = &(scene->active);
@@ -69,7 +70,8 @@ void	*main_scene_init(t_context *context, SDL_UNUSED void *level)
 	scene->slider_dec.trigger_fn = button_slider_change;
 	scene->slider_inc.trigger_fn = button_slider_change;
 
-	SDLX_Button_Init(&(scene->paste), fetch_button_sprite, 0, (SDL_Rect){WIN_WIDTH / 4 - 24, 215 + y_offset, 48, 48}, NULL);
+	SDLX_Button_Init(&(scene->paste), fetch_button_sprite, 0, (SDL_Rect){WIN_WIDTH / 4 - 24, 140 + y_offset, 48, 48}, NULL);
+	SDLX_Style_Button(&(scene->paste), 0, 1);
 	scene->paste.trigger_fn = button_paste;
 	scene->paste.meta = &(scene->active);
 	scene->paste.meta1 = &(scene->paste_meta);
@@ -78,11 +80,39 @@ void	*main_scene_init(t_context *context, SDL_UNUSED void *level)
 	scene->paste_meta.ptr1 = &(scene->color_start.s_color);
 	scene->paste_meta.ptr2 = &(scene->color_end.s_color);
 
-	SDLX_Button_Init(&(scene->save_file), fetch_save_sprite, 0, (SDL_Rect){150, 100, 32, 32}, NULL);
+	SDLX_Button_Init(&(scene->save_file), fetch_save_sprite, 0, (SDL_Rect){215, 164, 32, 32}, NULL);
 	scene->save_file.trigger_fn = button_generate;
 	SDLX_Style_Button(&(scene->save_file), 0, 1);
 	scene->save_file.meta = &(scene->curves);
 	scene->save_file.meta1 = &(scene->active_id);
+
+	fetch_slider_sprite(&(scene->color_selector.r.sprite_data), 2);
+	fetch_slider_sprite(&(scene->color_selector.g.sprite_data), 2);
+	fetch_slider_sprite(&(scene->color_selector.b.sprite_data), 2);
+	scene->color_selector.r.dst = SDLX_NULL_SELF;
+	scene->color_selector.g.dst = SDLX_NULL_SELF;
+	scene->color_selector.b.dst = SDLX_NULL_SELF;
+	scene->color_selector.r._dst = (SDL_Rect){7, 	  100, 14, 8};
+	scene->color_selector.g._dst = (SDL_Rect){7 + 15, 100, 14, 8};
+	scene->color_selector.b._dst = (SDL_Rect){7 + 30, 100, 14, 8};
+
+	SDLX_Button_Init(&(scene->color_choose), fetch_slider_sprite, 2, (SDL_Rect){10, 137, 7 * 5, 7 * 8}, NULL);
+	scene->color_choose.sprite = SDLX_Sprite_Static(ASSETS"color_slider.png");
+	scene->color_choose.sprite.dst = SDLX_NULL_SELF;
+	scene->color_choose.sprite._dst = (SDL_Rect){10, 137, 7 * 5, 7 * 8};
+	scene->color_choose.trigger_box.x -= 4;
+	scene->color_choose.trigger_box.w += 8;
+	scene->color_choose.trigger_box.h += 8;
+	scene->color_choose.trigger_box.y -= 4;
+
+	scene->color_choose.meta = &(scene->color_selector);
+	scene->color_choose.meta1 = &(scene->active);
+	scene->color_choose.update_fn = button_update_color_selector;
+
+	scene->scale = 8;
+	SDLX_Button_Init(&(scene->resolution), fetch_save_sprite, 4, (SDL_Rect){230, 132, 16, 16}, NULL);
+	scene->resolution.trigger_fn = button_resolution;
+	scene->resolution.meta = &(scene->scale);
 
 	return (NULL);
 }
@@ -105,15 +135,20 @@ void	*main_scene_update(SDL_UNUSED t_context *context, void *vp_scene)
 	t_main_scene *scene;
 
 	scene = vp_scene;
+
+	SDLX_RenderQueue_Add(NULL, &(scene->color_selector.r));
+	SDLX_RenderQueue_Add(NULL, &(scene->color_selector.g));
+	SDLX_RenderQueue_Add(NULL, &(scene->color_selector.b));
 	update_buttons(scene);
 
 	int i = 0;
 
+	scene->active = NULL;
 	SDL_qsort(scene->curves.curves, scene->curves.curve_count, sizeof(*(scene->curves.curves)), clerp_sort);
 	while (i < scene->curves.curve_count)
 	{
 		fetch_slider_sprite(&(scene->curves.curves[i].slider_b.sprite.sprite_data), 0);
-		if (scene->curves.curves[i].x == scene->active_id && scene->paste_meta.which == 0)
+		if (scene->curves.curves[i].x == scene->active_id && scene->active_id != -1)
 		{
 			scene->active = &(scene->curves.curves[i]);
 			fetch_slider_sprite(&(scene->curves.curves[i].slider_b.sprite.sprite_data), 1);
@@ -137,7 +172,7 @@ void	*main_scene_update(SDL_UNUSED t_context *context, void *vp_scene)
 
 	i = 0;
 	int	temp;
-	int	scale = 8;
+	int	scale = scene->scale;
 	SDL_Renderer	*renderer = SDLX_GetDisplay()->renderer;
 	SDL_RenderSetScale(renderer, scale, 1);
 
@@ -171,6 +206,7 @@ void	*main_scene_update(SDL_UNUSED t_context *context, void *vp_scene)
 	draw_slider_color(scene->color_end.s_color, &(color_box), scene->sliders_end.sprite._dst.x, renderer);
 	SDL_SetRenderDrawColor(SDLX_GetDisplay()->renderer, 0, 0, 0, 0);
 
+
 	if (scene->save_file.isTriggered == SDL_TRUE)
 	{
 		generate_c_file(scene->curves.curves, scene->curves.curve_count, &(scene->color_start), &(scene->color_end));
@@ -178,7 +214,8 @@ void	*main_scene_update(SDL_UNUSED t_context *context, void *vp_scene)
 	}
 
 	SDL_Rect slider_move_box = {0, 27, WIN_WIDTH, 70};
-	if (scene->paste_meta.which == 0 && scene->active != NULL && g_GameInput.GameInput.button_primleft == 1
+	if (scene->paste_meta.which == 0 && scene->active != NULL
+		&& g_GameInput.GameInput.button_primleft == 1 && g_GameInput_prev.GameInput.button_primleft == 1
 		&& SDL_PointInRect(&(g_GameInput.GameInput.primary), &(slider_move_box)) == SDL_TRUE)
 		scene->active->slider_b.sprite._dst.x = g_GameInput.GameInput.primary.x - scene->active->slider_b.sprite._dst.w / 2;
 

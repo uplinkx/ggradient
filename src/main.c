@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 02:31:10 by home              #+#    #+#             */
-/*   Updated: 2021/09/22 01:22:38 by home             ###   ########.fr       */
+/*   Updated: 2021/09/23 19:32:06 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	context_init(t_context *context)
 void	main_loop(void *context_addr)
 {
 	t_context	*context;
+	SDL_Color	bg_color = {59, 54, 56, 0};
 
 	context = context_addr;
 	if (context->shouldChange == SDL_TRUE)
@@ -49,7 +50,7 @@ void	main_loop(void *context_addr)
 	if (context->shouldQuit != SDL_TRUE && SDLX_discrete_frames(NULL) != EXIT_FAILURE)
 	{
 		SDLX_RenderQueue_Flush(NULL, NULL, SDL_TRUE);
-		SDLX_ScreenReset(SDLX_GetDisplay()->renderer, NULL);
+		SDLX_ScreenReset(SDLX_GetDisplay()->renderer, &(bg_color));
 	}
 
 	if (context->shouldChange == SDL_TRUE)

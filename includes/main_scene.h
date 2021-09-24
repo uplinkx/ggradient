@@ -28,6 +28,13 @@ typedef struct	s_main_scene
 	SDLX_button	add;
 	SDLX_button	del;
 
+	int			scale;
+	SDLX_button	resolution;
+
+	t_color_sel	color_selector;
+	SDLX_button	color_choose;
+	SDLX_Sprite	color_slider;
+
 	t_clerp_m	curves;
 	int			active_id;
 	clerps		*active;

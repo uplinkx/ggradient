@@ -16,6 +16,9 @@
 
 void	update_buttons(t_main_scene *scene)
 {
+	SDLX_Button_Update(&(scene->color_choose));
+	SDLX_Button_Update(&(scene->resolution));
+
 	SDLX_Button_Update(&(scene->slider_inc));
 	SDLX_Button_Update(&(scene->slider_dec));
 	SDLX_Button_Update(&(scene->sliders_start));
@@ -25,6 +28,7 @@ void	update_buttons(t_main_scene *scene)
 
 	SDLX_Button_Update(&(scene->add));
 	SDLX_Button_Update(&(scene->del));
+
 
 }
 

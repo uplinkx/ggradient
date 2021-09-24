@@ -41,6 +41,7 @@ int		fetch_slider_move_sprite(SDLX_Sprite_Data **dst, int no);
 int		fetch_save_sprite(SDLX_Sprite_Data **dst, int no);
 
 void	*button_domain_change(SDLX_button *self, void *meta, SDL_UNUSED size_t length);
+void	*button_resolution(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_slider_change(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_paste(SDL_UNUSED SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_add_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
@@ -49,6 +50,8 @@ void	*button_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_
 void	*button_generate(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_view_output(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_ends(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
+
+void	*button_update_color_selector(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 
 void	update_text(t_text *text, size_t size);
 void	update_text_wrapped(t_text *text, size_t size, Uint32 width);

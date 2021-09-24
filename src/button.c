@@ -28,6 +28,18 @@ void	*button_domain_change(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED 
 	return (NULL);
 }
 
+void	*button_resolution(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
+{
+	int	*num;
+
+	num = self->meta;
+	if (SDLX_GAME_RELEASE(g_GameInput, g_GameInput_prev, primleft)) { *num -= 1; }
+	if (SDLX_GAME_RELEASE(g_GameInput, g_GameInput_prev, primright)) { *num += 1; }
+
+	*num = SDL_min(18, SDL_max(1, *num));
+	return (NULL);
+}
+
 void	*button_slider_change(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
 {
 	clerps	**active;
@@ -116,6 +128,74 @@ void	*button_ends(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t 
 	which = button->meta;
 	if (SDLX_GAME_PRESS(g_GameInput, g_GameInput_prev, primleft))
 		*which = button->meta_length;
+
+	return (NULL);
+}
+
+void	*button_update_color_selector(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
+{
+	int			*color;
+	t_switcher	*paste_meta;
+	t_color_sel	*selector;
+	clerps		**active;
+	clerps		*t_active;
+
+	active = button->meta1;
+	paste_meta = button->meta - offsetof(t_main_scene, color_selector) + offsetof(t_main_scene, paste_meta);
+	if (paste_meta->which == 0 && *(active) == NULL)
+		return (NULL);
+
+	if (paste_meta->which == 1)
+		t_active = button->meta - offsetof(t_main_scene, color_selector) + offsetof(t_main_scene, color_start);
+	else if (paste_meta->which == 2)
+		t_active = button->meta - offsetof(t_main_scene, color_selector) + offsetof(t_main_scene, color_end);
+	else
+		t_active = *active;
+
+	active = &(t_active);
+
+	color = &((*active)->s_color);
+
+	int	r, g, b;
+	int	temp;
+
+	selector = button->meta;
+	if (button->isFocused == SDL_TRUE && g_GameInput.GameInput.button_primleft == 1)
+	{
+		if (g_GameInput.GameInput.primary.x < 21)
+		{
+			*color = (*color) & 0x00FFFF;
+			temp = g_GameInput.GameInput.primary.y - button->sprite._dst.y;
+			temp *= 255.0 / button->sprite._dst.h;
+			temp = 255 - temp;
+			temp = SDL_min(255, SDL_max(0, temp));
+			*color |= ((temp) & 0xFF) << 16;
+		}
+		else if (g_GameInput.GameInput.primary.x < 36)
+		{
+			*color = (*color) & 0xFF00FF;
+			temp = g_GameInput.GameInput.primary.y - button->sprite._dst.y;
+			temp *= 255.0 / button->sprite._dst.h;
+			temp = 255 - temp;
+			temp = SDL_min(255, SDL_max(0, temp));
+			*color |= ((temp) & 0xFF) << 8;
+		}
+		else if (g_GameInput.GameInput.primary.x < 59)
+		{
+			*color = (*color) & 0xFFFF00;
+			temp = g_GameInput.GameInput.primary.y - button->sprite._dst.y;
+			temp *= 255.0 / button->sprite._dst.h;
+			temp = 255 - temp;
+			temp = SDL_min(255, SDL_max(0, temp));
+			*color |= ((temp) & 0xFF) << 0;
+		}
+	}
+	ctoRGB(*color, &r, &g, &b);
+	selector->r._dst.y = 135 + 7 * 8 - (r * (button->sprite._dst.h / 255.0));
+	selector->g._dst.y = 135 + 7 * 8 - (g * (button->sprite._dst.h / 255.0));
+	selector->b._dst.y = 135 + 7 * 8 - (b * (button->sprite._dst.h / 255.0));
+
+
 
 	return (NULL);
 }

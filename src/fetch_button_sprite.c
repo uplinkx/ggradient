@@ -26,13 +26,13 @@ SDLX_Sprite_Data *carve_button_sprite(void)
 
 	/* The Button */
 	result[i].texture = texture;
-	result[i]._src = (SDL_Rect){0, 0, 48, 48};
+	result[i]._src = (SDL_Rect){0, 0, 48, 50};
 	result[i].src = &(result[i]._src);
 	result[i].cycle = 1;
 	i++;
 	/* The Button Hover */
 	result[i].texture = texture;
-	result[i]._src = (SDL_Rect){48, 0, 48, 48};
+	result[i]._src = (SDL_Rect){48, 0, 48, 50};
 	result[i].src = &(result[i]._src);
 	result[i].cycle = 1;
 	i++;
@@ -59,7 +59,7 @@ SDLX_Sprite_Data *carve_add_sprite(void)
 	SDL_Texture			*texture;
 	SDLX_Sprite_Data	*result;
 
-	result = SDL_calloc(3, sizeof(*result));
+	result = SDL_calloc(4, sizeof(*result));
 	texture = SDLX_LoadTexture(ASSETS"add.png");
 
 	i = 0;
@@ -71,12 +71,20 @@ SDLX_Sprite_Data *carve_add_sprite(void)
 	result[i].cycle = 1;
 	i++;
 
+	/* The Button */
+	result[i].texture = texture;
+	result[i]._src = (SDL_Rect){16, 0, 16, 16};
+	result[i].src = &(result[i]._src);
+	result[i].cycle = 1;
+	i++;
+
 	/* Remove */
 	result[i].texture = texture;
 	result[i]._src = (SDL_Rect){0, 16, 16, 16};
 	result[i].src = &(result[i]._src);
 	result[i].cycle = 1;
 	i++;
+
 	/* Remove Hover */
 	result[i].texture = texture;
 	result[i]._src = (SDL_Rect){16, 16, 16, 16};
@@ -97,6 +105,7 @@ int		fetch_add_sprite(SDLX_Sprite_Data **dst, int no)
 	if (no == 0) { *dst = &(sprite_arr[0]); }
 	if (no == 1) { *dst = &(sprite_arr[1]); }
 	if (no == 2) { *dst = &(sprite_arr[2]); }
+	if (no == 3) { *dst = &(sprite_arr[3]); }
 
 	return (EXIT_SUCCESS);
 }
@@ -107,7 +116,7 @@ SDLX_Sprite_Data *carve_slider_sprite(void)
 	SDL_Texture			*texture;
 	SDLX_Sprite_Data	*result;
 
-	result = SDL_calloc(2, sizeof(*result));
+	result = SDL_calloc(3, sizeof(*result));
 	texture = SDLX_LoadTexture(ASSETS"slider.png");
 
 	i = 0;
@@ -126,6 +135,13 @@ SDLX_Sprite_Data *carve_slider_sprite(void)
 	result[i].cycle = 1;
 	i++;
 
+	/* Horizontal Slider */
+	result[i].texture = texture;
+	result[i]._src = (SDL_Rect){0, 37, 14, 8};
+	result[i].src = &(result[i]._src);
+	result[i].cycle = 1;
+	i++;
+
 	return (result);
 }
 
@@ -138,6 +154,7 @@ int		fetch_slider_sprite(SDLX_Sprite_Data **dst, int no)
 
 	if (no == 0) { *dst = &(sprite_arr[0]); }
 	if (no == 1) { *dst = &(sprite_arr[1]); }
+	if (no == 2) { *dst = &(sprite_arr[2]); }
 
 	return (EXIT_SUCCESS);
 }
@@ -204,7 +221,7 @@ SDLX_Sprite_Data *carve_save_sprite(void)
 	SDL_Texture			*texture;
 	SDLX_Sprite_Data	*result;
 
-	result = SDL_calloc(4, sizeof(*result));
+	result = SDL_calloc(5, sizeof(*result));
 	texture = SDLX_LoadTexture(ASSETS"save.png");
 
 	i = 0;
@@ -237,6 +254,13 @@ SDLX_Sprite_Data *carve_save_sprite(void)
 	result[i].cycle = 1;
 	i++;
 
+	/* Resolution */
+	result[i].texture = texture;
+	result[i]._src = (SDL_Rect){0, 18 + 16, 16, 16};
+	result[i].src = &(result[i]._src);
+	result[i].cycle = 1;
+	i++;
+
 	return (result);
 }
 
@@ -251,6 +275,7 @@ int		fetch_save_sprite(SDLX_Sprite_Data **dst, int no)
 	else if (no == 1) { *dst = &(sprite_arr[1]); }
 	else if (no == 2) { *dst = &(sprite_arr[2]); }
 	else if (no == 3) { *dst = &(sprite_arr[3]); }
+	else if (no == 4) { *dst = &(sprite_arr[4]); }
 
 	return (EXIT_SUCCESS);
 }
