@@ -48,6 +48,7 @@ void	*button_remove_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSE
 void	*button_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_generate(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_view_output(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
+void	*button_ends(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 
 void	update_text(t_text *text, size_t size);
 void	update_text_wrapped(t_text *text, size_t size, Uint32 width);

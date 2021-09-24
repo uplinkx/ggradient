@@ -12,6 +12,7 @@
 ***************************************************************************/
 
 #include "main.h"
+#include "main_scene.h"
 
 #ifdef EMCC
 	#include <emscripten.h>
@@ -43,6 +44,13 @@ void	*button_slider_change(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED 
 			(*active)->slider_b.sprite._dst.x = move_to;
 	}
 
+	if (SDLX_GAME_PRESS(g_GameInput, g_GameInput_prev, primleft) != 0)
+	{
+		move_to = (*active)->slider_b.sprite._dst.x + self->meta_length / 5;
+		if (- 9 * SLIDER_SCALE < move_to && move_to < WIN_WIDTH / 2 - 9 * SLIDER_SCALE)
+			(*active)->slider_b.sprite._dst.x = move_to;
+	}
+
 	return (NULL);
 }
 
@@ -67,12 +75,14 @@ void	*button_paste(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t
 	char		*paste_text;
 	int			color;
 	clerps		**active;
+	t_switcher	*paste_meta;
 	size_t		offset;
 
 	color = 0;
 	offset = 0;
 	paste_text = NULL;
 	active = button->meta;
+	paste_meta = button->meta1;
 	if (SDLX_GAME_PRESS(g_GameInput, g_GameInput_prev, primleft))
 	{
 
@@ -85,11 +95,28 @@ void	*button_paste(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t
 		if (isdigit(paste_text[0]) == SDL_FALSE)
 			offset = 1;
 
-		if (*active != NULL)
+		if (paste_meta->which == 1)
+			SDL_sscanf(&(paste_text[offset]), "%x", paste_meta->ptr1);
+		else if (paste_meta->which == 2)
+			SDL_sscanf(&(paste_text[offset]), "%x", paste_meta->ptr2);
+		else if (*active != NULL)
 			SDL_sscanf(&(paste_text[offset]), "%x", &((*active)->s_color));
+
+		paste_meta->which = 0;
 
 		SDL_free(paste_text);
 	}
+	return (NULL);
+}
+
+void	*button_ends(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
+{
+	int			*which;
+
+	which = button->meta;
+	if (SDLX_GAME_PRESS(g_GameInput, g_GameInput_prev, primleft))
+		*which = button->meta_length;
+
 	return (NULL);
 }
 
@@ -121,13 +148,21 @@ void	*button_remove_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSE
 
 void	*button_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
 {
-	int		*active_id;
-	clerps	*actual;
+	int			*active_id;
+	t_switcher	*paste_meta;
+	clerps		*actual;
 
 	active_id = button->meta;
+	/* We have pointers that are addresses of a member in the struct. That means that we can jump to
+	other members if we knew the offsets of where the other members are because they are relative
+	to each other. This easily knowable using offsetof, or the __builtin_offsetof macros. */
 	actual = (void *)button - offsetof(clerps, slider_b);
+	paste_meta = (void *)active_id - offsetof(t_main_scene, active_id) + offsetof(t_main_scene, paste_meta);
 	if (SDLX_GAME_PRESS(g_GameInput, g_GameInput_prev, primleft))
+	{
 		*(active_id) = actual->x;
+		paste_meta->which = 0;
+	}
 
 	return (NULL);
 }

@@ -21,6 +21,13 @@ struct s_context;
 typedef int integer;
 typedef void *(t_scene_fn)(struct s_context *, void *);
 
+typedef struct	s_switcher
+{
+	int		which;
+	int		*ptr1;
+	int		*ptr2;
+}				t_switcher;
+
 typedef struct	clerps
 {
 	int			s_color;

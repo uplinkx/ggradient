@@ -45,6 +45,8 @@ typedef struct	s_main_scene
 
 	SDLX_button	paste;
 	SDLX_button	save_file;
+
+	t_switcher	paste_meta;
 }				t_main_scene;
 
 void	update_buttons(t_main_scene *scene);
