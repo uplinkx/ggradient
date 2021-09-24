@@ -114,6 +114,9 @@ void	*main_scene_init(t_context *context, SDL_UNUSED void *level)
 	scene->resolution.trigger_fn = button_resolution;
 	scene->resolution.meta = &(scene->scale);
 
+	SDLX_Button_Init(&(scene->help), fetch_save_sprite, 5, (SDL_Rect){240, 2, 16, 16}, NULL);
+	scene->help.trigger_fn = button_help;
+
 	return (NULL);
 }
 

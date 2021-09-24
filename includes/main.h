@@ -50,6 +50,7 @@ void	*button_slider(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_
 void	*button_generate(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_view_output(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 void	*button_ends(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
+void	*button_help(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 
 void	*button_update_color_selector(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t length);
 
@@ -67,5 +68,6 @@ int		clerp_sort(const void *ptr1, const void *ptr2);
 void	curves_init(t_clerp_m *manager);
 
 void	generate_c_file(clerps *curves, int curve_count, clerps *start, clerps *end);
+void	print_help(void);
 
 #endif

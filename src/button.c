@@ -18,6 +18,8 @@
 	#include <emscripten.h>
 #endif
 
+#include <stdio.h>
+
 void	*button_domain_change(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
 {
 	int	*num;
@@ -37,6 +39,15 @@ void	*button_resolution(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED siz
 	if (SDLX_GAME_RELEASE(g_GameInput, g_GameInput_prev, primright)) { *num += 1; }
 
 	*num = SDL_min(18, SDL_max(1, *num));
+	return (NULL);
+}
+
+void	*button_help(SDL_UNUSED SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED size_t length)
+{
+	if (SDLX_GAME_RELEASE(g_GameInput, g_GameInput_prev, primleft))
+	{
+		print_help();
+	}
 	return (NULL);
 }
 

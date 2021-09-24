@@ -30,6 +30,7 @@ typedef struct	s_main_scene
 
 	int			scale;
 	SDLX_button	resolution;
+	SDLX_button	help;
 
 	t_color_sel	color_selector;
 	SDLX_button	color_choose;
