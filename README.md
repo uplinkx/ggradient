@@ -11,7 +11,7 @@ The code can be called to preallocate the values of an array or be called every 
 ## Instructions:
 
 <p align="center">
-  <img height="200" src="https://github.com/uplinkx/gradient/blob/main/resources/preview_grad.png" />
+  <img height="500" src="https://github.com/uplinkx/gradient/blob/main/resources/preview_grad.png" />
 </p>
 <br>
 
