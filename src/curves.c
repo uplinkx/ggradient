@@ -70,3 +70,67 @@ void	curve_remove(t_clerp_m *manager, int *active_id)
 	manager->curve_count--;
 
 }
+
+void	grad_lerp(int *colors, int start, int end, int tmax, int offset)
+{
+	int	i;
+
+	i = 0;
+	while (i < tmax)
+	{
+		colors[i + offset] = clerp(start, end, i, tmax);
+		i++;
+	}
+}
+
+void	create_gradient_ends(int *dest, clerps color_start, clerps color_end)
+{
+	int	start_color;
+	int	end_color;
+
+	start_color = color_start.s_color;
+	end_color = color_end.s_color;
+	grad_lerp(dest, start_color, end_color, WIN_WIDTH, 0);
+}
+
+void	create_gradient(int *dest, int curve_amount, clerps *lerp_info, clerps color_start, clerps color_end)
+{
+	int	i;
+	int	start_color;
+	int	end_color;
+	int	offset;
+	int	distance;
+	int	bias;
+
+	if (curve_amount <= 0)
+	{
+		create_gradient_ends(dest, color_start, color_end);
+		return ;
+	}
+
+	i = 0;
+	offset = 0;
+	bias = 9 / 2.0 * SLIDER_SCALE + 2;
+
+	start_color = color_start.s_color;
+	end_color = lerp_info[0].s_color;
+	distance = (lerp_info[0].slider_b.sprite._dst.x - color_start.slider_b.sprite._dst.x) * 2 + bias + bias + 7;
+	grad_lerp(dest, start_color, end_color, distance, offset);
+
+	offset += distance;
+	while (i < curve_amount - 1)
+	{
+		start_color = end_color;
+		end_color = lerp_info[i + 1].s_color;
+		distance = (lerp_info[i + 1].slider_b.sprite._dst.x - lerp_info[i].slider_b.sprite._dst.x) * 2;
+		grad_lerp(dest, start_color, end_color, distance, offset);
+
+		offset += distance;
+		i++;
+	}
+
+	start_color = end_color;
+	end_color = color_end.s_color;
+	distance = (WIN_WIDTH / 2 - lerp_info[i].slider_b.sprite._dst.x) * 2;
+	grad_lerp(dest, start_color, end_color, distance, offset);
+}
