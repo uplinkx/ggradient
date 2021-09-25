@@ -4,7 +4,7 @@ NAMEW = index.html
 FLAGS = -Wall -Wextra -Werror -fsanitize=address
 INCLUDES = -I includes/ -I includes/SDLX/
 
-LIBRARIES = -s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS="['png']" -s ASYNCIFY -s 'ASYNCIFY_IMPORTS=["js_paste"]' -s EXTRA_EXPORTED_RUNTIME_METHODS=["stringToUTF8"]
+LIBRARIES = -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS="['png']" -s ASYNCIFY -s 'ASYNCIFY_IMPORTS=["js_paste"]' -s EXTRA_EXPORTED_RUNTIME_METHODS=["stringToUTF8"]
 SKELE_HTML = --shell-file skeleton.html
 
 PRELOAD_FILES =	\

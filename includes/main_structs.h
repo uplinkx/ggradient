@@ -67,7 +67,6 @@ typedef struct	s_context
 	t_scene_fn	*update_fn;
 	t_scene_fn	*close_fn;
 
-	TTF_Font	*font;
 }				t_context;
 
 typedef struct	s_text

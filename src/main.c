@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 02:31:10 by home              #+#    #+#             */
-/*   Updated: 2021/09/23 19:32:06 by home             ###   ########.fr       */
+/*   Updated: 2021/09/25 00:01:20 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ void	context_init(t_context *context)
 	context->meta = NULL;
 
 	context->init_fn = main_scene_init;
-
-	TTF_Init();
-	context->font = TTF_OpenFont(ASSETS"chary___.ttf", 150);
 }
 
 void	main_loop(void *context_addr)
