@@ -32,3 +32,17 @@ This was coded in the span of two weeks using C and just SDL from scratch. I use
 I purchased the sprites from https://cyangmou.itch.io/pixel-menu-gui-hud-icons-basicset and made a few modification where necessary. I created the question and clipboard sprites as best I could to match the style using Aseprite. 
 
 It was ported to the web using Emscripten.
+
+## More Previews:
+
+<p align="center"><img height="350" align="left" src="https://github.com/uplinkx/gradient/blob/main/resources/preview3.png" /></p>
+<p align="center"><img height="350" align="left" src="https://github.com/uplinkx/gradient/blob/main/resources/preview4.png" /></p>
+
+
+
+<p align="center"><img height="350" align="left" src="https://github.com/uplinkx/gradient/blob/main/resources/preview2.png" /></p>
+<p align="center"><img height="350" align="left" src="https://github.com/uplinkx/gradient/blob/main/resources/preview6.png" /></p>
+
+
+ 
+<p align="center"><img height="350" align="left" src="https://github.com/uplinkx/gradient/blob/main/resources/preview5.png" /></p>
