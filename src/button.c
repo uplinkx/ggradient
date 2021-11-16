@@ -79,14 +79,43 @@ void	*button_slider_change(SDLX_button *self, SDL_UNUSED void *meta, SDL_UNUSED 
 
 #ifdef EMCC
 
-EM_JS(char*, js_paste, (), {
+// EM_JS(char*, paste, (), {
+//     return Asyncify.handleAsync(async () => {
+// 		console.log("Pasting");
+//         document.getElementById("clipping").focus();
+// 		try {
+// 			str = await navigator.clipboard.readText();
+// 		} catch (err)
+// 		{
+// 			str = "0xFFFFFF"
+// 		}
+// 		console.log("Received");
+// 		// str = "0xFFFFFF"
+//         document.getElementById("canvas").focus();
+//         const size = lengthBytesUTF8(str) + 1;
+//         const rtn = _malloc(size);
+//         stringToUTF8(str, rtn, size);
+// 		console.log("Created");
+// 		console.log("result", str);
+//         // return rtn;
+// 		return "0xFF00FF";
+//     });
+// });
+
+EM_JS(char*, paste, (), {
     return Asyncify.handleAsync(async () => {
         document.getElementById("clipping").focus();
-        const str = await navigator.clipboard.readText();
+		clip_str = "0xFFFFFF";
+		try {
+			clip_str = await navigator.clipboard.readText();
+		} catch (err)
+		{
+			clip_str = "0xFFFFFF";
+		}
         document.getElementById("canvas").focus();
-        const size = lengthBytesUTF8(str) + 1;
+        const size = lengthBytesUTF8(clip_str) + 1;
         const rtn = _malloc(size);
-        stringToUTF8(str, rtn, size);
+        stringToUTF8(clip_str, rtn, size);
         return rtn;
     });
 });
@@ -110,12 +139,12 @@ void	*button_paste(SDLX_button *button, SDL_UNUSED void *meta, SDL_UNUSED size_t
 	{
 
 #ifdef EMCC
-		paste_text = js_paste();
+		paste_text = paste();
 #else
 		paste_text = SDL_GetClipboardText();
 #endif
 
-		if (isdigit(paste_text[0]) == SDL_FALSE)
+		if (isxdigit(paste_text[0]) == 0)
 			offset = 1;
 
 		if (paste_meta->which == 1)

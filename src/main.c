@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 02:31:10 by home              #+#    #+#             */
-/*   Updated: 2021/09/25 00:01:20 by home             ###   ########.fr       */
+/*   Updated: 2021/11/15 16:18:49 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	main_loop(void *context_addr)
 		context->close_fn(context, context->meta);
 	}
 }
+
+#include <stdio.h>
 
 int	main(void)
 {
